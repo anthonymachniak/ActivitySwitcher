@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import org.w3c.dom.Text
 
 const val ACTIVITY_MESSAGES = "AppDictionary"
 
@@ -18,6 +17,16 @@ class MainActivity : AppCompatActivity() {
 
         var btnSaveText : Button = findViewById(R.id.btnSaveText)
         var enterText : TextView = findViewById(R.id.enterText)
+
+        if (intent != null) {
+            val message = intent.getStringExtra(ACTIVITY_MESSAGES)
+
+            val textView = findViewById<TextView>(R.id.txtSavedText).apply {
+                text = message
+            }
+        }
+
+        intent = Intent(this, SecondActivity::class.java)
 
         btnSaveText.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -35,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun saveText(textToSave: String) {
-        intent = Intent(this, SecondActivity::class.java).apply() {
+        intent = Intent(this, SecondActivity::class.java).apply {
             putExtra(ACTIVITY_MESSAGES, textToSave)
         }
 
